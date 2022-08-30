@@ -1,6 +1,4 @@
-
 #importing useful libraries
-
 from sklearn.feature_extraction.text import TfidfVectorizer, TfidfTransformer, CountVectorizer
 # import os
 import numpy as np
@@ -11,9 +9,8 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 # import pickle
 # import collections
-%matplotlib inline
-
-
+# %matplotlib inline
+import pickle
 import pandas as pd
 # import re
 from sklearn.model_selection import train_test_split
@@ -28,7 +25,6 @@ data = pd.read_csv('XSS.csv')
 data.head()
 
 #Vectorizing the data using TF-IDF to make the data trainable
-
 corpus = [d for d in data['Sentence']]
 y = [[1,0][d!= 1] for d in data['Label']]
 vectorizer2 = TfidfVectorizer()
@@ -126,3 +122,5 @@ if(y_Predict == 0):
   print("It is not an attack")
 else:
   print("It is a XSS attack!")
+
+pickle.dump(dec, open('nlp_model.pkl', 'wb'))

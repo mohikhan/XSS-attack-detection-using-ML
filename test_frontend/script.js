@@ -1,5 +1,5 @@
 
-function submitForm() {
+async function submitForm() {
 
   const name = document.getElementById('NameOnCard').value;
   const address = document.getElementById('Address').value;
@@ -18,9 +18,9 @@ function submitForm() {
         "Content-type": "application/json; charset=UTF-8"
      }
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+    // .then(response => response.json())
+    .then(response => {
+      console.log(response);
     })
     .catch(error =>{
       console.log(error);

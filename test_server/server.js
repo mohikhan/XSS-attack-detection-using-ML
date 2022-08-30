@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
 
 const app = express();
 
@@ -10,17 +11,34 @@ app.use(cors());
 
 // check whether given form fields are safe to store....
 app.post('/checkXSS', async (req,res) => {
-    // const name = req.body.username;
-    // const userAddress = req.body.address;
-    // const occupation = req.body.occupation;
+  
+    const name = req.body.username;
+    const address = req.body.address;
+    const occupation = req.body.occupation;
+    const remarks = req.body.remarks;
 
-    console.log(req.body.username);
-    // console.log('User name string =  ', name);
-    // console.log('User Address string = ', userAddress);
-    // consol.log('User designation string = ', occupation);
+    console.log(name);
+    console.log(address);
+    console.log(occupation);
+    console.log(remarks);
     
-    // TODO: add call to ML model for performing 
-    // xss attack detection
+    // call to Flask API for checking xss attack.....
+    let response = await axios.post('http://localhost:5000/predict', {
+        name:name,
+        address:address,
+        occupation:occupation,
+        remarks:remarks
+    });
+
+    console.log(response.data);
+
+    if(response.data == 0){
+      console.log("Form data is safe");
+    }
+    else {
+      console.log("Form data contains malicious XSS script");
+    }
+
     res.status(200).send('success');
 });
 
